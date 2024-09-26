@@ -1,4 +1,4 @@
-public class Lab1 {
+public class Lab2 {
 
     // Метод для виведення симетричної ялинки з символів '*'
     public void printTree(int levels) {
