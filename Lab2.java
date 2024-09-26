@@ -1,6 +1,6 @@
 public class Lab2 {
 
-    // Метод для виведення симетричної ялинки з символів '*'
+    // Метод для виведення симетричної ялинки з символів ''
     public void printTree(int levels) {
         for (int i = 1; i <= levels; i++) {
             // Виводимо пробіли для вирівнювання зірочок по центру
@@ -8,7 +8,7 @@ public class Lab2 {
                 System.out.print(" ");
             }
             // Виводимо зірочки
-            for (int k = 0; k < (2 * i - 1); k++) {
+            for (int k = 0; k < (2*i - 1); k++) {
                 System.out.print("*");
             }
             System.out.println();
@@ -38,10 +38,10 @@ public class Lab2 {
 
     // Основний метод для тестування
     public static void main(String[] args) {
-        Lab1 lab = new Lab1();
+        Lab2 lab = new Lab2();
 
         // Задаємо кількість рівнів ялинки у змінній
-        int treeLevels = 9;
+        int treeLevels = 10;
 
         // Виведення симетричної ялинки
         lab.printTree(treeLevels);
