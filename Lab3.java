@@ -1,4 +1,60 @@
+import java.sql.*;
 import java.util.Scanner;
+
+// Клас для роботи з базою даних
+class Db {
+    String dbUrl = "jdbc:mysql://localhost:3306/myGame?useSSL=false";
+    String user = "root";
+    String password = "Maksym_now";
+    Connection con;
+
+    public Db() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            this.con = DriverManager.getConnection(dbUrl, user, password);
+        } catch (Exception e) {
+            System.out.println("Connection failed: " + e.getMessage());
+        }
+    }
+
+    public void close() {
+        try {
+            if (con != null && !con.isClosed()) {
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to close connection: " + e.getMessage());
+        }
+    }
+
+    public boolean validateUser(String username, String password) {
+        String query = "SELECT count(*) FROM users WHERE username = ? AND password = ?";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 1;  // Повертаємо true, якщо знайдено 1 запис
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error validating user: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public void createUser(String username, String password) {
+        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.executeUpdate();
+            System.out.println("Користувача " + username + " створено.");
+        } catch (Exception e) {
+            System.out.println("Error creating user: " + e.getMessage());
+        }
+    }
+}
 
 // Клас, що описує гравця
 class Player {
@@ -103,10 +159,13 @@ class Board {
 public class Lab3 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Db db = new Db();
 
-        // Імена гравців за замовчуванням
-        Player player1 = new Player("Player1", 'X');
-        Player player2 = new Player("Player2", 'O');
+        // Запитуємо логін і пароль для першого гравця
+        Player player1 = loginPlayer(db, scanner, 'X');
+        
+        // Запитуємо логін і пароль для другого гравця
+        Player player2 = loginPlayer(db, scanner, 'O');
 
         Board board = new Board();
         Player currentPlayer = player1;
@@ -132,6 +191,28 @@ public class Lab3 {
                 System.out.println("Нічия!");
             } else {
                 currentPlayer = (currentPlayer == player1) ? player2 : player1;
+            }
+        }
+
+        db.close();
+    }
+
+    // Метод для логіну гравця
+    public static Player loginPlayer(Db db, Scanner scanner, char symbol) {
+        String username;
+        String password;
+
+        while (true) {
+            System.out.println("Введіть логін для гравця (" + symbol + "): ");
+            username = scanner.nextLine();
+            System.out.println("Введіть пароль для гравця (" + symbol + "): ");
+            password = scanner.nextLine();
+
+            if (db.validateUser(username, password)) {
+                System.out.println("Логін успішний для гравця " + username);
+                return new Player(username, symbol);
+            } else {
+                System.out.println("Невірний логін або пароль. Спробуйте ще раз.");
             }
         }
     }
