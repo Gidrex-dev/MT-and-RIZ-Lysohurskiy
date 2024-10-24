@@ -33,11 +33,11 @@ class Player {
 }
 
 // Клас, що описує ігрове поле
-class TicTacToeBoard {
+class Board {
     private char[][] board; // Ігрове поле 3x3
 
     // Конструктор
-    public TicTacToeBoard() {
+    public Board() {
         board = new char[3][3];
         // Заповнення поля порожніми символами
         for (int i = 0; i < 3; i++) {
@@ -108,7 +108,7 @@ public class Lab3 {
         Player player1 = new Player("Player1", 'X');
         Player player2 = new Player("Player2", 'O');
 
-        TicTacToeBoard board = new TicTacToeBoard();
+        Board board = new Board();
         Player currentPlayer = player1;
 
         boolean gameWon = false;
