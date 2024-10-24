@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Крестики-нолики</title>
+</head>
+<body>
+<h1>Игра "Крестики-нолики"</h1>
+<table border="1">
+    <tr>
+        <td th:text="${gameField[0][0]}"></td>
+        <td th:text="${gameField[0][1]}"></td>
+        <td th:text="${gameField[0][2]}"></td>
+    </tr>
+    <tr>
+        <td th:text="${gameField[1][0]}"></td>
+        <td th:text="${gameField[1][1]}"></td>
+        <td th:text="${gameField[1][2]}"></td>
+    </tr>
+    <tr>
+        <td th:text="${gameField[2][0]}"></td>
+        <td th:text="${gameField[2][1]}"></td>
+        <td th:text="${gameField[2][2]}"></td>
+    </tr>
+</table>
+</body>
+</html>

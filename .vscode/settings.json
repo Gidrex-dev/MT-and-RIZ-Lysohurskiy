@@ -4,5 +4,6 @@
     ],
     "java.project.referencedLibraries": [
         "e:\\Documents\\GitHub\\mysql-connector-j-9.1.0\\mysql-connector-j-9.1.0.jar"
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }
