@@ -41,7 +41,7 @@ public class Lab2 {
         Lab2 lab = new Lab2();
 
         // Задаємо кількість рівнів ялинки у змінній
-        int treeLevels = 10;
+        int treeLevels = 15;
 
         // Виведення симетричної ялинки
         lab.printTree(treeLevels);
